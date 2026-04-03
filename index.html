@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gully Auction — Play. Bid. Win.</title>
+  <meta name="description" content="Gully Auction is the ultimate cricket auction platform. Create or join auctions with friends, bid on players, and build your dream team.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar" id="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-brand">
+          <img src="assets/logo.png" alt="Gully Auction Logo">
+          <div class="nav-brand-text">
+            <span class="nav-brand-name">GULLY AUCTION</span>
+            <span class="nav-brand-tagline">Play · Bid · Win</span>
+          </div>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="create-auction.html" class="nav-link">Create</a>
+          <a href="join-auction.html" class="nav-link">Join</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── Hero ── -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          Cricket Auction Platform
+        </div>
+        <img src="assets/hero.png" alt="Gully Auction" class="hero-logo">
+        <h1>
+          <span class="text-green">GULLY</span> <span class="text-purple">AUCTION</span>
+        </h1>
+        <div class="hero-tagline">Play. Bid. Win.</div>
+        <p class="hero-desc">Create your own cricket auction or join a friend's auction room. Pick players, place your bids, and build the ultimate dream team!</p>
+      </div>
+    </section>
+
+    <!-- ── Two Options ── -->
+    <section class="options-section" id="options">
+      <div class="container">
+        <div class="options-grid">
+
+          <!-- Create Auction Card -->
+          <a href="create-auction.html" class="option-card" id="card-create">
+            <div class="option-card-icon icon-green">
+              <!-- Gavel + Plus icon SVG -->
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 3.5l-3 3 7 7 3-3a2.12 2.12 0 0 0 0-3l-4-4a2.12 2.12 0 0 0-3 0z"/>
+                <path d="M9.5 6.5L2 14l4 4 7.5-7.5"/>
+                <line x1="2" y1="22" x2="10" y2="22"/>
+                <line x1="6" y1="18" x2="6" y2="22"/>
+              </svg>
+            </div>
+            <h2>Create Auction</h2>
+            <p>Set up a new auction room, configure your rules, add players, and generate an invite code to share with your friends.</p>
+            <span class="btn btn-green">
+              <span class="btn-icon">🏏</span> Create Now
+            </span>
+          </a>
+
+          <!-- Join Auction Card -->
+          <a href="join-auction.html" class="option-card card-purple" id="card-join">
+            <div class="option-card-icon icon-purple">
+              <!-- Enter/Key icon SVG -->
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+            </div>
+            <h2>Join Auction</h2>
+            <p>Got an invite code from a friend? Enter it here to join their auction room and start bidding on players right away.</p>
+            <span class="btn btn-purple">
+              <span class="btn-icon">🎯</span> Join Now
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features ── -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="features-header">
+          <h2>Why <span class="text-green">Gully Auction</span>?</h2>
+          <p>Everything you need for a thrilling cricket auction experience</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <h3>Instant Setup</h3>
+            <p>Create an auction in seconds with easy configuration</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🔗</span>
+            <h3>Invite Code</h3>
+            <p>Share a unique code to bring friends into your auction</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🏏</span>
+            <h3>Cricket First</h3>
+            <p>Built specifically for cricket player auctions</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🎨</span>
+            <h3>Custom Rules</h3>
+            <p>Set your own budget, player pool, and auction rules</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p class="footer-text">
+        <span class="highlight">GULLY AUCTION</span> — Where Players Are Made, And Legends Are Bought.
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── Subtle entrance animations with Intersection Observer ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.option-card, .feature-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // ── Card ripple effect ──
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  </script>
+</body>
+</html>

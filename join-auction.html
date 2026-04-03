@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Auction — Gully Auction</title>
+  <meta name="description" content="Join a cricket auction room using your invite code. Enter the code and start bidding on players.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-brand">
+          <img src="assets/logo.png" alt="Gully Auction Logo">
+          <div class="nav-brand-text">
+            <span class="nav-brand-name">GULLY AUCTION</span>
+            <span class="nav-brand-tagline">Play · Bid · Win</span>
+          </div>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="create-auction.html" class="nav-link">Create</a>
+          <a href="join-auction.html" class="nav-link active">Join</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── Join Section ── -->
+    <section class="join-hero">
+      <div class="container">
+        <div class="form-header">
+          <h1><span class="text-purple">Join</span> an Auction</h1>
+          <p>Enter the invite code you received from the auction organizer to join their auction room.</p>
+        </div>
+
+        <!-- Code Input -->
+        <div class="code-input-group">
+          <input 
+            type="text" 
+            class="form-input" 
+            id="joinCodeInput" 
+            placeholder="GA-XXXXXX" 
+            maxlength="9"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button class="btn btn-purple" id="joinBtn" onclick="lookupAuction()">
+            🔍 Find Auction
+          </button>
+        </div>
+
+        <!-- Error Message -->
+        <div class="join-error" id="joinError">
+          <span class="error-icon">⚠️</span>
+          <span id="errorText">No auction found with this code. Please check and try again.</span>
+        </div>
+
+        <!-- Auction Preview -->
+        <div class="auction-preview" id="auctionPreview">
+          <div class="preview-card">
+            <div class="preview-card-header">
+              <h3 id="previewName">—</h3>
+              <span class="preview-badge">Found!</span>
+            </div>
+            <div class="preview-card-body">
+              <div class="preview-detail">
+                <span class="preview-detail-label">👤 Organizer</span>
+                <span class="preview-detail-value" id="previewOrganizer">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">📅 Date & Time</span>
+                <span class="preview-detail-value" id="previewDateTime">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">📍 Venue</span>
+                <span class="preview-detail-value" id="previewLocation">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">👥 Teams</span>
+                <span class="preview-detail-value" id="previewTeams">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">💰 Budget</span>
+                <span class="preview-detail-value" id="previewBudget">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">🏏 Players</span>
+                <span class="preview-detail-value" id="previewPlayers">—</span>
+              </div>
+              <div class="preview-detail">
+                <span class="preview-detail-label">📋 Format</span>
+                <span class="preview-detail-value" id="previewFormat">—</span>
+              </div>
+            </div>
+            <div class="preview-card-footer">
+              <!-- Join Form -->
+              <div class="join-form" id="joinForm">
+                <div class="form-group">
+                  <label class="form-label" for="joinPlayerName">Your Name <span class="required">*</span></label>
+                  <input type="text" class="form-input" id="joinPlayerName" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="joinTeamName">Team Name <span class="required">*</span></label>
+                  <input type="text" class="form-input" id="joinTeamName" placeholder="Your team name (e.g. Thunder Kings)">
+                </div>
+                <button class="btn btn-green btn-lg" style="width: 100%;" onclick="joinAuction()">
+                  🎯 Join This Auction
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── How to Join Guide ── -->
+    <section class="features-section" style="padding-top: 60px;">
+      <div class="container">
+        <div class="features-header">
+          <h2>How to <span class="text-purple">Join</span>?</h2>
+          <p>It's easy — just 3 simple steps</p>
+        </div>
+        <div class="features-grid" style="max-width: 800px; margin: 0 auto;">
+          <div class="feature-item">
+            <span class="feature-icon">🔑</span>
+            <h3>Get the Code</h3>
+            <p>Ask the auction organizer for the unique invite code</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📝</span>
+            <h3>Enter Code</h3>
+            <p>Type the code above to find the auction room</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🏏</span>
+            <h3>Start Bidding</h3>
+            <p>Enter your details and start bidding on players!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Success Modal ── -->
+    <div class="modal-overlay" id="joinSuccessModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeJoinModal()">&times;</button>
+        <div class="modal-icon">🏏</div>
+        <h2>You're In!</h2>
+        <p id="joinSuccessMsg">You have successfully joined the auction. Get ready to bid!</p>
+
+        <div class="joined-summary">
+          <div class="joined-detail">
+            <span class="joined-label">Auction</span>
+            <span class="joined-value" id="joinedAuctionName">—</span>
+          </div>
+          <div class="joined-detail">
+            <span class="joined-label">Your Team</span>
+            <span class="joined-value text-green" id="joinedTeamName">—</span>
+          </div>
+          <div class="joined-detail">
+            <span class="joined-label">Date</span>
+            <span class="joined-value" id="joinedDate">—</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <a href="index.html" class="btn btn-green">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p class="footer-text">
+        <span class="highlight">GULLY AUCTION</span> — Where Players Are Made, And Legends Are Bought.
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    let foundAuction = null;
+
+    // ── Auto-format code input ──
+    const codeInput = document.getElementById('joinCodeInput');
+    codeInput.addEventListener('input', (e) => {
+      let raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      let formatted = raw;
+      if (raw.length > 2) {
+        if (raw.startsWith('GA')) {
+          formatted = 'GA-' + raw.substring(2);
+        } else {
+          // In case they just start typing the code directly
+          formatted = 'GA-' + raw;
+        }
+      }
+      e.target.value = formatted;
+
+      // Hide error when typing
+      document.getElementById('joinError').classList.remove('visible');
+    });
+
+    // Enter key to search
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') lookupAuction();
+    });
+
+    // ── Look up auction by code ──
+    function lookupAuction() {
+      const code = codeInput.value.trim().toUpperCase();
+
+      if (!code || code.length < 4) {
+        showError('Please enter a valid invite code (e.g. GA-ABC123)');
+        return;
+      }
+
+      // Search localStorage
+      const auctions = JSON.parse(localStorage.getItem('gullyAuctions') || '[]');
+      const auction = auctions.find(a => a.code === code);
+
+      if (!auction) {
+        showError('No auction found with this code. Please check and try again.');
+        document.getElementById('auctionPreview').classList.remove('visible');
+        foundAuction = null;
+        return;
+      }
+
+      // Found! Show preview
+      foundAuction = auction;
+      document.getElementById('joinError').classList.remove('visible');
+
+      // Populate preview
+      document.getElementById('previewName').textContent = auction.name;
+      document.getElementById('previewOrganizer').textContent = auction.organizer;
+      
+      // Format date robustly
+      const dateObj = new Date(auction.date + (auction.time ? 'T' + auction.time : ''));
+      let dateOut = `${auction.date} at ${auction.time}`; // fallback
+      
+      if (!isNaN(dateObj.getTime())) {
+        const dateStr = dateObj.toLocaleDateString('en-IN', { 
+          weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' 
+        });
+        const timeStr = dateObj.toLocaleTimeString('en-IN', { 
+          hour: '2-digit', minute: '2-digit', hour12: true 
+        });
+        dateOut = `${dateStr} at ${timeStr}`;
+      }
+      document.getElementById('previewDateTime').textContent = dateOut;
+      
+      document.getElementById('previewLocation').textContent = auction.location || 'Not specified';
+      document.getElementById('previewTeams').textContent = `${auction.numTeams} Teams × ${auction.playersPerTeam} Players`;
+      document.getElementById('previewBudget').textContent = `₹${Number(auction.teamBudget).toLocaleString('en-IN')} per team`;
+      document.getElementById('previewPlayers').textContent = `${auction.players ? auction.players.length : 0} players in pool`;
+      
+      const formatLabels = { open: 'Open Bidding', sealed: 'Sealed Bid', marquee: 'Marquee + Open' };
+      document.getElementById('previewFormat').textContent = formatLabels[auction.auctionType] || 'Open Bidding';
+
+      // Show preview with animation
+      const preview = document.getElementById('auctionPreview');
+      preview.classList.add('visible');
+      preview.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function showError(msg) {
+      document.getElementById('errorText').textContent = msg;
+      document.getElementById('joinError').classList.add('visible');
+    }
+
+    // ── Join Auction ──
+    function joinAuction() {
+      const name = document.getElementById('joinPlayerName').value.trim();
+      const team = document.getElementById('joinTeamName').value.trim();
+
+      if (!name) {
+        shakeInput('joinPlayerName');
+        return;
+      }
+      if (!team) {
+        shakeInput('joinTeamName');
+        return;
+      }
+
+      // Save join data
+      let joined = JSON.parse(localStorage.getItem('gullyJoined') || '[]');
+      joined.push({
+        code: foundAuction.code,
+        auctionName: foundAuction.name,
+        playerName: name,
+        teamName: team,
+        joinedAt: new Date().toISOString()
+      });
+      localStorage.setItem('gullyJoined', JSON.stringify(joined));
+
+      // Show success modal
+      document.getElementById('joinedAuctionName').textContent = foundAuction.name;
+      document.getElementById('joinedTeamName').textContent = team;
+      
+      const dateObj = new Date(foundAuction.date + (foundAuction.time ? 'T' + foundAuction.time : ''));
+      if (!isNaN(dateObj.getTime())) {
+        document.getElementById('joinedDate').textContent = dateObj.toLocaleDateString('en-IN', { 
+          weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' 
+        });
+      } else {
+        document.getElementById('joinedDate').textContent = foundAuction.date || 'TBD';
+      }
+
+      document.getElementById('joinSuccessModal').classList.add('active');
+    }
+
+    function closeJoinModal() {
+      document.getElementById('joinSuccessModal').classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('joinSuccessModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeJoinModal();
+    });
+
+    function shakeInput(id) {
+      const el = document.getElementById(id);
+      el.style.borderColor = '#ff4444';
+      el.style.animation = 'shake 0.4s ease';
+      el.focus();
+      setTimeout(() => {
+        el.style.borderColor = '';
+        el.style.animation = '';
+      }, 600);
+    }
+
+    // ── Intersection Observer for features ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

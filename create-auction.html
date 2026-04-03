@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Auction — Gully Auction</title>
+  <meta name="description" content="Create a new cricket auction room, set your rules, add players, and invite friends with a unique code.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-brand">
+          <img src="assets/logo.png" alt="Gully Auction Logo">
+          <div class="nav-brand-text">
+            <span class="nav-brand-name">GULLY AUCTION</span>
+            <span class="nav-brand-tagline">Play · Bid · Win</span>
+          </div>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="create-auction.html" class="nav-link active">Create</a>
+          <a href="join-auction.html" class="nav-link">Join</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── Create Auction Form ── -->
+    <section class="form-section">
+      <div class="container">
+        <div class="form-container">
+
+          <div class="form-header">
+            <h1><span class="text-green">Create</span> Your Auction</h1>
+            <p>Fill in the details below to set up your cricket auction room. Once created, you'll get a unique invite code to share with friends.</p>
+          </div>
+
+          <form class="form-card" id="createAuctionForm" autocomplete="off">
+
+            <!-- Step Indicator -->
+            <div class="step-indicator" id="stepIndicator">
+              <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Details</div>
+              </div>
+              <div class="step-line"></div>
+              <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Settings</div>
+              </div>
+              <div class="step-line"></div>
+              <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Players</div>
+              </div>
+            </div>
+
+            <!-- STEP 1: Basic Details -->
+            <div class="form-step active" id="step1">
+              <div class="form-group">
+                <label class="form-label" for="auctionName">Auction Name <span class="required">*</span></label>
+                <input type="text" class="form-input" id="auctionName" placeholder="e.g. Sunday Premier League 2026" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="organizerName">Organizer Name <span class="required">*</span></label>
+                  <input type="text" class="form-input" id="organizerName" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="organizerPhone">Phone Number</label>
+                  <input type="tel" class="form-input" id="organizerPhone" placeholder="+91 98765 43210">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="auctionDate">Auction Date <span class="required">*</span></label>
+                  <input type="date" class="form-input" id="auctionDate" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="auctionTime">Auction Time <span class="required">*</span></label>
+                  <input type="time" class="form-input" id="auctionTime" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="auctionLocation">Location / Venue</label>
+                <input type="text" class="form-input" id="auctionLocation" placeholder="e.g. Community Ground, Sector 5">
+              </div>
+
+              <div class="form-actions">
+                <span></span>
+                <button type="button" class="btn btn-green" onclick="goToStep(2)">
+                  Next: Settings →
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Auction Settings -->
+            <div class="form-step" id="step2">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="numTeams">Number of Teams <span class="required">*</span></label>
+                  <select class="form-select" id="numTeams" required>
+                    <option value="">Select</option>
+                    <option value="2">2 Teams</option>
+                    <option value="3">3 Teams</option>
+                    <option value="4">4 Teams</option>
+                    <option value="5">5 Teams</option>
+                    <option value="6">6 Teams</option>
+                    <option value="8">8 Teams</option>
+                    <option value="10">10 Teams</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="playersPerTeam">Players Per Team <span class="required">*</span></label>
+                  <select class="form-select" id="playersPerTeam" required>
+                    <option value="">Select</option>
+                    <option value="7">7 Players</option>
+                    <option value="8">8 Players</option>
+                    <option value="9">9 Players</option>
+                    <option value="10">10 Players</option>
+                    <option value="11">11 Players</option>
+                    <option value="12">12 Players</option>
+                    <option value="15">15 Players</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="teamBudget">Team Budget <span class="required">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" class="form-input has-prefix" id="teamBudget" placeholder="e.g. 10000" required>
+                  </div>
+                  <span class="form-help">Total purse for each team (in virtual currency)</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="basePrice">Base Price <span class="required">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" class="form-input has-prefix" id="basePrice" placeholder="e.g. 100" required>
+                  </div>
+                  <span class="form-help">Minimum bid for each player</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="bidIncrement">Bid Increment</label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" class="form-input has-prefix" id="bidIncrement" placeholder="e.g. 50" value="50">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="auctionType">Auction Format</label>
+                  <select class="form-select" id="auctionType">
+                    <option value="open">Open Bidding</option>
+                    <option value="sealed">Sealed Bid</option>
+                    <option value="marquee">Marquee + Open</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="auctionRules">Special Rules (Optional)</label>
+                <textarea class="form-textarea" id="auctionRules" placeholder="Any specific rules for your auction... e.g. Maximum 3 overseas players, Minimum 1 wicketkeeper per team, etc."></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-outline btn-sm" onclick="goToStep(1)">
+                  ← Back
+                </button>
+                <button type="button" class="btn btn-green" onclick="goToStep(3)">
+                  Next: Players →
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Player Pool -->
+            <div class="form-step" id="step3">
+              <div class="form-group">
+                <label class="form-label">Player Pool</label>
+                <p class="form-help mb-3">Add players who will be available for bidding in this auction.</p>
+
+                <!-- Player List -->
+                <div class="player-list" id="playerList">
+                  <!-- Players will be dynamically added here -->
+                </div>
+
+                <!-- Add Player Row -->
+                <div class="add-player-row">
+                  <div class="add-player-inputs">
+                    <input type="text" class="form-input" id="playerNameInput" placeholder="Player name">
+                    <select class="form-select" id="playerRoleInput">
+                      <option value="Batsman">🏏 Batsman</option>
+                      <option value="Bowler">🎯 Bowler</option>
+                      <option value="All-Rounder">⭐ All-Rounder</option>
+                      <option value="Wicketkeeper">🧤 Wicketkeeper</option>
+                    </select>
+                    <select class="form-select" id="playerCategoryInput">
+                      <option value="Gold">🥇 Gold</option>
+                      <option value="Silver">🥈 Silver</option>
+                      <option value="Bronze">🥉 Bronze</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-green btn-sm" id="addPlayerBtn" onclick="addPlayer()">
+                    + Add Player
+                  </button>
+                </div>
+
+                <div class="player-count" id="playerCount">
+                  <span class="text-green">0</span> players added
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-outline btn-sm" onclick="goToStep(2)">
+                  ← Back
+                </button>
+                <button type="button" class="btn btn-green btn-lg" onclick="createAuction()">
+                  🚀 Create Auction
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Success Modal ── -->
+    <div class="modal-overlay" id="successModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-icon">🎉</div>
+        <h2>Auction Created!</h2>
+        <p>Your auction has been set up successfully. Share the invite code below with your friends so they can join.</p>
+
+        <div class="invite-code-section">
+          <div class="invite-code-label">Your Invite Code</div>
+          <div class="invite-code-value" id="generatedCode">—</div>
+          <div class="invite-code-hint">Share this code with friends to invite them</div>
+          <button class="copy-btn" id="copyCodeBtn" onclick="copyCode()">📋 Copy Code</button>
+        </div>
+
+        <div class="mt-3">
+          <a href="index.html" class="btn btn-outline btn-sm">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p class="footer-text">
+        <span class="highlight">GULLY AUCTION</span> — Where Players Are Made, And Legends Are Bought.
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── Players array ──
+    let players = [];
+
+    // ── Step Navigation ──
+    function goToStep(step) {
+      // Validate before proceeding forward
+      if (step === 2 && !validateStep1()) return;
+      if (step === 3 && !validateStep2()) return;
+
+      // Update step indicators
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById(`step${step}`).classList.add('active');
+
+      // Update step indicator dots
+      document.querySelectorAll('.step-indicator .step').forEach((s, i) => {
+        s.classList.remove('active', 'completed');
+        if (i + 1 < step) s.classList.add('completed');
+        if (i + 1 === step) s.classList.add('active');
+      });
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep1() {
+      const name = document.getElementById('auctionName').value.trim();
+      const org = document.getElementById('organizerName').value.trim();
+      const date = document.getElementById('auctionDate').value;
+      const time = document.getElementById('auctionTime').value;
+
+      if (!name) { shakeInput('auctionName'); return false; }
+      if (!org) { shakeInput('organizerName'); return false; }
+      if (!date) { shakeInput('auctionDate'); return false; }
+      if (!time) { shakeInput('auctionTime'); return false; }
+      return true;
+    }
+
+    function validateStep2() {
+      const teams = document.getElementById('numTeams').value;
+      const perTeam = document.getElementById('playersPerTeam').value;
+      const budget = document.getElementById('teamBudget').value;
+      const base = document.getElementById('basePrice').value;
+
+      if (!teams) { shakeInput('numTeams'); return false; }
+      if (!perTeam) { shakeInput('playersPerTeam'); return false; }
+      if (!budget) { shakeInput('teamBudget'); return false; }
+      if (!base) { shakeInput('basePrice'); return false; }
+      return true;
+    }
+
+    function shakeInput(id) {
+      const el = document.getElementById(id);
+      el.style.borderColor = '#ff4444';
+      el.style.animation = 'shake 0.4s ease';
+      el.focus();
+      setTimeout(() => {
+        el.style.borderColor = '';
+        el.style.animation = '';
+      }, 600);
+    }
+
+    // ── Player Management ──
+    function addPlayer() {
+      const nameInput = document.getElementById('playerNameInput');
+      const roleInput = document.getElementById('playerRoleInput');
+      const categoryInput = document.getElementById('playerCategoryInput');
+
+      const name = nameInput.value.trim();
+      if (!name) { shakeInput('playerNameInput'); return; }
+
+      const player = {
+        id: Date.now(),
+        name: name,
+        role: roleInput.value,
+        category: categoryInput.value
+      };
+
+      players.push(player);
+      nameInput.value = '';
+      nameInput.focus();
+      renderPlayers();
+    }
+
+    function removePlayer(id) {
+      players = players.filter(p => p.id !== id);
+      renderPlayers();
+    }
+
+    function renderPlayers() {
+      const list = document.getElementById('playerList');
+      const count = document.getElementById('playerCount');
+
+      count.innerHTML = `<span class="text-green">${players.length}</span> players added`;
+
+      if (players.length === 0) {
+        list.innerHTML = '<div class="empty-players">No players added yet. Add players above to build your auction pool.</div>';
+        return;
+      }
+
+      list.innerHTML = players.map((p, i) => {
+        const roleIcons = { 'Batsman': '🏏', 'Bowler': '🎯', 'All-Rounder': '⭐', 'Wicketkeeper': '🧤' };
+        const catColors = { 'Gold': '#FFD700', 'Silver': '#C0C0C0', 'Bronze': '#CD7F32' };
+        return `
+          <div class="player-item" style="animation: fadeInUp 0.3s ease ${i * 0.05}s backwards">
+            <div class="player-info">
+              <span class="player-role-icon">${roleIcons[p.role] || '🏏'}</span>
+              <div>
+                <div class="player-name">${p.name}</div>
+                <div class="player-meta">
+                  <span>${p.role}</span>
+                  <span class="player-cat" style="color: ${catColors[p.category]}">${p.category}</span>
+                </div>
+              </div>
+            </div>
+            <button class="player-remove" onclick="removePlayer(${p.id})" title="Remove player">&times;</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ── Generate Code ──
+    function generateCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = 'GA-';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
+    // ── Create Auction ──
+    function createAuction() {
+      const code = generateCode();
+
+      // Gather all auction data
+      const auctionData = {
+        code: code,
+        name: document.getElementById('auctionName').value.trim(),
+        organizer: document.getElementById('organizerName').value.trim(),
+        phone: document.getElementById('organizerPhone').value.trim(),
+        date: document.getElementById('auctionDate').value,
+        time: document.getElementById('auctionTime').value,
+        location: document.getElementById('auctionLocation').value.trim(),
+        numTeams: document.getElementById('numTeams').value,
+        playersPerTeam: document.getElementById('playersPerTeam').value,
+        teamBudget: document.getElementById('teamBudget').value,
+        basePrice: document.getElementById('basePrice').value,
+        bidIncrement: document.getElementById('bidIncrement').value || '50',
+        auctionType: document.getElementById('auctionType').value,
+        rules: document.getElementById('auctionRules').value.trim(),
+        players: players,
+        createdAt: new Date().toISOString()
+      };
+
+      // Save to localStorage
+      let auctions = JSON.parse(localStorage.getItem('gullyAuctions') || '[]');
+      auctions.push(auctionData);
+      localStorage.setItem('gullyAuctions', JSON.stringify(auctions));
+
+      // Show modal
+      document.getElementById('generatedCode').textContent = code;
+      document.getElementById('successModal').classList.add('active');
+    }
+
+    // ── Copy Code ──
+    function copyCode() {
+      const code = document.getElementById('generatedCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copyCodeBtn');
+        btn.textContent = '✅ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copy Code';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('successModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    // Enter key to add player
+    document.getElementById('playerNameInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addPlayer();
+      }
+    });
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('auctionDate').setAttribute('min', today);
+
+    // Initial render
+    renderPlayers();
+  </script>
+</body>
+</html>
